@@ -1,0 +1,23 @@
+<script>
+
+safari.application.addEventListener('command', performCommand, false);
+safari.application.addEventListener('message', handleMessage, false);
+
+function performCommand(event) {
+    if (event.command === 'contextmenutranslate') {
+        safari.application.activeBrowserWindow.activeTab.page.dispatchMessage('getselection');
+    }
+}
+
+function handleMessage(msg) {
+    if ((window == window.top) && (msg.message !== '')) {
+    
+        var query = msg.message;
+        var query = query.trim();
+        var query = encodeURIComponent(query);
+        
+        safari.application.activeBrowserWindow.openTab('foreground').url = 'http://www.ebay.co.uk/sch/i.html?LH_Complete=1&LH_Sold=1&_nkw=' + query + '&_sop=13';
+    }
+}
+
+</script>
